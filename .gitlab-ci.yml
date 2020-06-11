@@ -5,7 +5,7 @@ before_script:
   ## Install ssh-agent if not already installed, it is required by Docker.
   ## (change apt-get to yum if you use an RPM-based image)
   ##
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+  - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )"
 
   ##
   ## Run ssh-agent (inside the build environment)
@@ -31,7 +31,7 @@ before_script:
   ## with your own domain name. You can copy and repeat that command if you have
   ## more than one server to connect to.
   ##
-  - ssh-keyscan your-server >> ~/.ssh/known_hosts
+  - ssh-keyscan 18.185.56.161 >> ~/.ssh/known_hosts
   - chmod 644 ~/.ssh/known_hosts
 
   ##
@@ -40,7 +40,6 @@ before_script:
   ##
   #- echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts'
   #- chmod 644 ~/.ssh/known_hosts
-
   ##
   ## You can optionally disable host key checking. Be aware that by adding that
   ## you are suspectible to man-in-the-middle attacks.
@@ -48,19 +47,17 @@ before_script:
   ## you will overwrite your user's SSH config.
   ##
   #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-
   ##
   ## Optionally, if you will be using any Git commands, set the user name and
   ## email.
   ##
-  - git config --global user.email "darth@empire.com"
-  - git config --global user.name "Darth Vader"
-
+  # - git config --global user.email "darth@empire.com"
+  # - git config --global user.name "Darth Vader"
 
 Test SSH:
   script:
-  # try to connect to your aws server
-  - scp index.html ec2-user@your-server:/home/ec2-user/www
+    # try to connect to your aws server
+    - scp index.html ec2-user@18.185.56.161:/home/ec2-user/www
 
-  # try to clone yourself. A *PUBLIC* key paired to the SSH_PRIVATE_KEY was added as deploy key to this repository
-  - touch test.md
+    # try to clone yourself. A *PUBLIC* key paired to the SSH_PRIVATE_KEY was added as deploy key to this repository
+    - touch test.md
